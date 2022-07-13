@@ -19,12 +19,26 @@ galleryApp.getPhotos = () => {
     client_id: galleryApp.key,
   });
   //use fetch method
-  fetch(url).then((res) => {
-    console.log(res);
-    return res.json();
-  });
+  fetch(url)
+    .then((res) => {
+      return res.json();
+    })
+    .then((result) => {
+      galleryApp.displayPhotos(result);
+    });
 };
 
+//method to display data on page
+galleryApp.displayPhotos = (photos) => {
+  const galleryUl = document.querySelector(".gallery");
+
+  //loop through photos array
+  photos.forEach((photo) => {
+    const newLi = document.createElement("li");
+    newLi.innerHTML = `<img src=${photo.urls.thumb} alt=${photo.alt_description}/>`;
+    galleryUl.appendChild(newLi);
+  });
+};
 //init method
 
 galleryApp.init = () => {
